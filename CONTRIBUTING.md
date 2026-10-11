@@ -5,7 +5,7 @@ Thanks for helping improve Android App Template.
 ## Workflow
 
 1. Fork the repository.
-2. Create a focused branch from `main`.
+2. Create a focused branch from `develop`.
 3. Keep changes small enough to review.
 4. Run the relevant checks before opening a pull request.
 5. Open a pull request using the template and describe the behavior change.
