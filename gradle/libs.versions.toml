@@ -10,6 +10,7 @@ composeRules = "0.6.1"
 core = "1.19.1"
 coroutines = "1.11.0"
 detekt = "2.0.0-alpha.3"
+espresso = "3.7.0"
 hilt = "2.59.2"
 hilt-navigation-compose = "1.4.0"
 javax-inject = "1"
@@ -87,6 +88,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 test-core = { group = "androidx.test", name = "core-ktx", version.ref = "testCore" }
+test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
