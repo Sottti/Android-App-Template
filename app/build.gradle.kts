@@ -40,6 +40,12 @@ configurations
     }
 
 dependencies {
+    constraints {
+        androidTestImplementation(libs.test.espresso.core) {
+            because("Espresso before 3.7.0 reflects InputManager.getInstance, unavailable on API 37.")
+        }
+    }
+
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.junit)

@@ -1,16 +1,16 @@
 # Android App Template (AAT)
 
-[![Android CI](https://github.com/Sottti/AndroidAppTemplate/actions/workflows/android.yml/badge.svg)](https://github.com/Sottti/AndroidAppTemplate/actions/workflows/android.yml)
-![API](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/AndroidAppTemplate/refs/heads/main/gradle/libs.versions.toml&query=$.versions.minSdk&label=API&color=brightgreen&suffix=%2B&logo=android&logoColor=white)
-![Compose BOM](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/AndroidAppTemplate/refs/heads/main/gradle/libs.versions.toml&query=$.versions.compose-bom&label=Compose%20BOM&color=007ACC&logo=jetpackcompose&logoColor=white)
-![Navigation](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/AndroidAppTemplate/refs/heads/main/gradle/libs.versions.toml&query=$.versions.navigation&label=Navigation&color=4CAF50&logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/AndroidAppTemplate/refs/heads/main/gradle/libs.versions.toml&query=$.versions.kotlin&label=Kotlin&color=7F52FF&logo=kotlin&logoColor=white)
-![GitHub last commit](https://img.shields.io/github/last-commit/Sottti/AndroidAppTemplate?logo=github&logoColor=white)
-![GitHub repo size](https://img.shields.io/github/repo-size/Sottti/AndroidAppTemplate)
+[![Android CI](https://github.com/Sottti/Android-App-Template/actions/workflows/android.yml/badge.svg)](https://github.com/Sottti/Android-App-Template/actions/workflows/android.yml)
+![API](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/Android-App-Template/refs/heads/develop/gradle/libs.versions.toml&query=$.versions.minSdk&label=API&color=brightgreen&suffix=%2B&logo=android&logoColor=white)
+![Compose BOM](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/Android-App-Template/refs/heads/develop/gradle/libs.versions.toml&query=$.versions.compose-bom&label=Compose%20BOM&color=007ACC&logo=jetpackcompose&logoColor=white)
+![Navigation](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/Android-App-Template/refs/heads/develop/gradle/libs.versions.toml&query=$.versions.navigation&label=Navigation&color=4CAF50&logo=android&logoColor=white)
+![Kotlin](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/Sottti/Android-App-Template/refs/heads/develop/gradle/libs.versions.toml&query=$.versions.kotlin&label=Kotlin&color=7F52FF&logo=kotlin&logoColor=white)
+![GitHub last commit](https://img.shields.io/github/last-commit/Sottti/Android-App-Template?logo=github&logoColor=white)
+![GitHub repo size](https://img.shields.io/github/repo-size/Sottti/Android-App-Template)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat&logo=opensourceinitiative&logoColor=white)](LICENSE)
 
-Modern Kotlin Android app template with Jetpack Compose, Hilt, Navigation 3, Ktor, Room/Paging,
-Paparazzi, and a modular MVVM/Clean Architecture setup.
+A Kotlin and Jetpack Compose starter app with modular architecture, offline caching, and reusable
+test fakes.
 
 ## ⚠️ Disclaimer
 
@@ -106,10 +106,13 @@ Execute the following Gradle tasks from the project root to run the automated te
 
 > ℹ️ Run Gradle with JDK 21 or newer.
 
-| Suite                      | Command                               | Description                                                                                             |
-|----------------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------|
-| Local/unit tests           | `./gradlew testDebug`                 | Executes JVM-based tests located under `src/test` for the `debug` build variant.                        |
+| Suite | Command | Description |
+| --- | --- | --- |
+| Local/unit tests | `./gradlew test -PexcludeSnapshotTests=true` | Runs local tests in Android and plain Kotlin/JVM modules, excluding screenshot tests. |
+| Screenshot tests | `./gradlew verifyPaparazziDebug` | Verifies debug Paparazzi screenshots against the checked-in baselines without an emulator. |
 | Instrumented Android tests | `./gradlew connectedDebugAndroidTest` | Launches Espresso/Compose instrumentation tests in `src/androidTest` on a connected emulator or device. |
+
+The local/unit and screenshot commands match the suites run by the [CI workflow](.github/workflows/android.yml).
 
 > ℹ️ Ensure that an Android emulator or physical device is connected before running the
 > instrumentation suite.
@@ -124,8 +127,9 @@ Execute the following Gradle tasks from the project root to run the automated te
   whenever the network is available.
 * **Navigation infrastructure:** A dedicated Compose Navigation 3 stack coordinates screen changes
   via a `NavigationManager`, with `Navigator` components observing command channels and handling
-  saveable state, back stack pops, and simultaneous navigation requests. All routing code lives in
-  the dedicated `presentation:navigation` module so feature modules stay navigation-agnostic and
+  saveable state, back stack pops, and simultaneous navigation requests. Navigation contracts and
+  destination models live in `presentation:navigation`; `presentation:navigation-impl` owns the
+  Navigation 3 implementation and feature wiring. Feature modules depend on the contracts and stay
   decoupled from the implementation details.
 * **Snapshot tooling:** The `presentation` module includes a Paparazzi test toolkit featuring a
   custom Pixel 10 Pro XL device profile and helpers that generate day/night parameter sets for rich
@@ -136,8 +140,9 @@ Execute the following Gradle tasks from the project root to run the automated te
 * **Coroutine utilities:** The `utils` module ships reusable coroutine extensions such as
   `stateInWhileSubscribed` and `observeConfigurationChanges` for concise and lifecycle-aware state
   management in ViewModels.
-* **Build hygiene:** Gradle is configured for Kotlin explicit API mode, context receivers, and the
-  Versions Plugin to keep dependencies up to date and compiler flags consistent across modules.
+* **Build hygiene:** Shared Gradle configuration enables Kotlin explicit API mode and context
+  parameters. Detekt and Android lint provide static analysis, Kover provides coverage checks, and
+  module dependency checks enforce architectural boundaries.
 * **Testable system features:** The `data/system-features` module exposes fake managers backed by
   Turbine-based tests, showcasing how to stub system services when exercising the settings feature.
 * **Streamlined startup:** A Hilt-enabled `Application`, splash activity, and edge-to-edge
@@ -181,9 +186,13 @@ dependencies explicit.
 ├── di/                      # Centralized Hilt bindings that wire modules together
 ├── presentation/            # Compose UI, navigation stack, previews, and design system
 ├── utils/                   # Cross-cutting helpers (coroutines, lifecycle, etc.)
-├── buildSrc/                # Gradle convention plugins and dependency catalogs
-└── gradle/, *.gradle.kts    # Build logic, settings, and version configuration
+├── gradle/                  # Gradle wrapper and dependency version catalog
+├── build.gradle.kts         # Shared module configuration and verification tasks
+└── settings.gradle.kts      # Repositories and module list
 ```
+
+Shared build configuration lives in [`build.gradle.kts`](build.gradle.kts), and dependency versions
+are defined in [`gradle/libs.versions.toml`](gradle/libs.versions.toml).
 
 ### 🗺️ Module Overview
 
@@ -258,5 +267,5 @@ the [LICENSE](LICENSE) file for details.
 ## 👋 Contact
 
 If you feel like saying hi, have any comments, suggestions or
-questions, [open an issue](https://github.com/Sottti/AndroidAppTemplate/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen)
+questions, [open an issue](https://github.com/Sottti/Android-App-Template/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen)
 or say [hi 👋 on X](https://x.com/Sotttti).
