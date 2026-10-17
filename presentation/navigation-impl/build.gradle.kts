@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -16,6 +14,12 @@ android {
 }
 
 dependencies {
+    constraints {
+        androidTestImplementation(libs.test.espresso.core) {
+            because("Espresso before 3.7.0 reflects InputManager.getInstance, unavailable on API 37.")
+        }
+    }
+
     implementation(libs.compose.foundation)
     implementation(libs.compose.material)
     implementation(libs.hilt)
@@ -24,11 +28,11 @@ dependencies {
     implementation(libs.navigation.runtime)
     implementation(libs.navigation.ui)
     implementation(platform(libs.compose.bom))
-    implementation(project(module.presentation.designSystem.colors))
-    implementation(project(module.presentation.designSystem.themes))
-    implementation(project(module.presentation.features.characterDetails))
-    implementation(project(module.presentation.features.charactersList))
-    implementation(project(module.presentation.navigation))
+    implementation(projects.presentation.designSystem.colors)
+    implementation(projects.presentation.designSystem.themes)
+    implementation(projects.presentation.features.characterDetails)
+    implementation(projects.presentation.features.charactersList)
+    implementation(projects.presentation.navigation)
     ksp(libs.hilt.compiler)
 
     androidTestImplementation(libs.compose.ui.test.junit4)

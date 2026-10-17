@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
@@ -13,5 +11,5 @@ dependencies {
     implementation(libs.compose.material)
     implementation(libs.compose.ui)
     implementation(platform(libs.compose.bom))
-    implementation(project(module.presentation.designSystem.typography))
+    implementation(projects.presentation.designSystem.typography)
 }

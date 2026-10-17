@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
 }
@@ -9,5 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(project(module.domain.coreModels))
+    implementation(projects.domain.coreModels)
 }

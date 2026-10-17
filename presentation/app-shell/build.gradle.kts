@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -17,14 +15,14 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.hilt.navigation.compose)
     implementation(platform(libs.compose.bom))
-    implementation(project(module.domain.settings))
-    implementation(project(module.presentation.designSystem.colors))
-    implementation(project(module.presentation.designSystem.dimensions))
-    implementation(project(module.presentation.designSystem.text))
-    implementation(project(module.presentation.designSystem.themes))
-    implementation(project(module.presentation.navigation))
-    implementation(project(module.presentation.navigationImpl))
-    implementation(project(module.presentation.utils))
+    implementation(projects.domain.settings)
+    implementation(projects.presentation.designSystem.colors)
+    implementation(projects.presentation.designSystem.dimensions)
+    implementation(projects.presentation.designSystem.text)
+    implementation(projects.presentation.designSystem.themes)
+    implementation(projects.presentation.navigation)
+    implementation(projects.presentation.navigationImpl)
+    implementation(projects.presentation.utils)
     ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.coroutines.test)

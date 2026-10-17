@@ -1,4 +1,6 @@
-rootProject.name = "Android App Template"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "AndroidAppTemplate"
 
 pluginManagement {
     repositories {

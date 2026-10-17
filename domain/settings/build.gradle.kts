@@ -1,11 +1,9 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
 }
 
 dependencies {
-    api(project(module.domain.coreModels))
+    api(projects.domain.coreModels)
     api(libs.annotations)
     api(libs.kotlin.coroutines.core)
     implementation(libs.javax.inject)

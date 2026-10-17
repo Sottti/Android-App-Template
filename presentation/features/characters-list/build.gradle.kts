@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -16,9 +14,15 @@ android {
 }
 
 dependencies {
+    constraints {
+        androidTestImplementation(libs.test.espresso.core) {
+            because("Espresso before 3.7.0 reflects InputManager.getInstance, unavailable on API 37.")
+        }
+    }
+
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.truth)
-    androidTestImplementation(testFixtures(project(module.presentation.utils)))
+    androidTestImplementation(testFixtures(projects.presentation.utils))
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
     implementation(libs.compose.foundation)
@@ -30,20 +34,20 @@ dependencies {
     implementation(libs.paging.compose)
     implementation(libs.paging.runtime)
     implementation(platform(libs.compose.bom))
-    implementation(project(module.domain.characters))
-    implementation(project(module.presentation.designSystem.colors))
-    implementation(project(module.presentation.designSystem.dimensions))
-    implementation(project(module.presentation.designSystem.empty))
-    implementation(project(module.presentation.designSystem.error))
-    implementation(project(module.presentation.designSystem.images))
-    implementation(project(module.presentation.designSystem.progressIndicators))
-    implementation(project(module.presentation.designSystem.shapes))
-    implementation(project(module.presentation.designSystem.text))
-    implementation(project(module.presentation.designSystem.themes))
-    implementation(project(module.presentation.designSystem.topBars))
-    implementation(project(module.presentation.navigation))
-    implementation(project(module.presentation.previews))
-    implementation(project(module.presentation.utils))
+    implementation(projects.domain.characters)
+    implementation(projects.presentation.designSystem.colors)
+    implementation(projects.presentation.designSystem.dimensions)
+    implementation(projects.presentation.designSystem.empty)
+    implementation(projects.presentation.designSystem.error)
+    implementation(projects.presentation.designSystem.images)
+    implementation(projects.presentation.designSystem.progressIndicators)
+    implementation(projects.presentation.designSystem.shapes)
+    implementation(projects.presentation.designSystem.text)
+    implementation(projects.presentation.designSystem.themes)
+    implementation(projects.presentation.designSystem.topBars)
+    implementation(projects.presentation.navigation)
+    implementation(projects.presentation.previews)
+    implementation(projects.presentation.utils)
     ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.coroutines.test)
@@ -51,5 +55,5 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
-    testImplementation(project(module.presentation.paparazzi))
+    testImplementation(projects.presentation.paparazzi)
 }

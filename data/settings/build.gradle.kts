@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.ksp)
@@ -12,9 +10,9 @@ android {
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.hilt)
-    implementation(project(module.domain.settings))
-    implementation(project(module.domain.systemFeatures))
-    implementation(project(module.utils.lifecycle))
+    implementation(projects.domain.settings)
+    implementation(projects.domain.systemFeatures)
+    implementation(projects.utils.lifecycle)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)

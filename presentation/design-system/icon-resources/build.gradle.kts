@@ -1,6 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
-
 plugins {
     alias(libs.plugins.android.library)
 }
@@ -11,5 +8,5 @@ android {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(project(module.presentation.designSystem.colors))
+    implementation(projects.presentation.designSystem.colors)
 }

@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -12,7 +10,7 @@ android {
 
 dependencies {
     implementation(libs.hilt)
-    implementation(project(module.domain.systemFeatures))
+    implementation(projects.domain.systemFeatures)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)

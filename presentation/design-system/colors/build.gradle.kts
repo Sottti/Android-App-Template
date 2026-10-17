@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
@@ -15,7 +13,7 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.core)
     implementation(platform(libs.compose.bom))
-    implementation(project(module.domain.coreModels))
+    implementation(projects.domain.coreModels)
 
     testImplementation(libs.junit)
     testImplementation(libs.truth)

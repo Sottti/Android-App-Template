@@ -1,5 +1,3 @@
-import com.sottti.android.app.template.buildsrc.module
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -12,12 +10,12 @@ android {
 
 dependencies {
     implementation(libs.hilt)
-    implementation(project(module.data.characters))
-    implementation(project(module.data.network))
-    implementation(project(module.data.settings))
-    implementation(project(module.data.systemFeatures))
-    implementation(project(module.domain.characters))
-    implementation(project(module.domain.settings))
-    implementation(project(module.domain.systemFeatures))
+    implementation(projects.data.characters)
+    implementation(projects.data.network)
+    implementation(projects.data.settings)
+    implementation(projects.data.systemFeatures)
+    implementation(projects.domain.characters)
+    implementation(projects.domain.settings)
+    implementation(projects.domain.systemFeatures)
     ksp(libs.hilt.compiler)
 }
