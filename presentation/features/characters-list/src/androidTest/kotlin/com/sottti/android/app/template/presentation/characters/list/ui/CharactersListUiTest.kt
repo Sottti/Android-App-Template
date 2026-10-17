@@ -3,8 +3,12 @@ package com.sottti.android.app.template.presentation.characters.list.ui
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasScrollToIndexAction
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performScrollToIndex
+import com.sottti.android.app.template.presentation.characters.list.fixtures.listOfMultipleCharactersUiModels
 import com.sottti.android.app.template.presentation.design.system.empty.EMPTY_TEST_TAG
 import com.sottti.android.app.template.presentation.design.system.error.ERROR_TEST_TAG
 import com.sottti.android.app.template.presentation.design.system.top.bars.ui.MAIN_TOP_BAR_TEST_TAG
@@ -120,7 +124,9 @@ internal class CharactersListUiTest(
         runUiTest(content = { CharactersListUiPreview(loadedStateLoadsOfCharacters) }) {
             onNode(fullscreenIndicatorMatcher()).assertDoesNotExist()
             onNode(gridIndicatorMatcher()).assertDoesNotExist()
-            onAllNodesWithTag(GRID_CHARACTER_TEST_TAG).assertCountEquals(10)
+            onNodeWithText(listOfMultipleCharactersUiModels.first().name).assertIsDisplayed()
+            onNode(hasScrollToIndexAction()).performScrollToIndex(listOfMultipleCharactersUiModels.lastIndex)
+            onNodeWithText(listOfMultipleCharactersUiModels.last().name).assertIsDisplayed()
             onNodeWithTag(MAIN_TOP_BAR_TEST_TAG).assertIsDisplayed()
         }
 
@@ -131,7 +137,9 @@ internal class CharactersListUiTest(
             onNode(gridIndicatorMatcher()).assertIsNotDisplayed()
 
             onNodeWithTag(PULL_TO_REFRESH_TEST_TAG).assertIsDisplayed()
-            onAllNodesWithTag(GRID_CHARACTER_TEST_TAG).assertCountEquals(10)
+            onNodeWithText(listOfMultipleCharactersUiModels.first().name).assertIsDisplayed()
+            onNode(hasScrollToIndexAction()).performScrollToIndex(listOfMultipleCharactersUiModels.lastIndex)
+            onNodeWithText(listOfMultipleCharactersUiModels.last().name).assertIsDisplayed()
             onNodeWithTag(MAIN_TOP_BAR_TEST_TAG).assertIsDisplayed()
         }
 
