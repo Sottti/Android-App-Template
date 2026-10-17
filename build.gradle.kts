@@ -76,7 +76,10 @@ subprojects {
 
     dependencies {
         "detektPlugins"(libraries.detekt.compose)
-        "detektPlugins"(libraries.detekt.formatting)
+        "detektPlugins"(libraries.detekt.formatting) {
+            // Alpha.4 bundles ktlint, but its metadata still requests the unpublished repackaging artifact.
+            exclude(group = "dev.detekt", module = "ktlint-repackage")
+        }
     }
 
     detekt {
