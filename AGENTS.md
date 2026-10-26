@@ -12,17 +12,17 @@
 ## Creating GitHub issues and pull requests
 
 Before composing an issue or PR title or body, read the current
-[shared contribution guide](https://github.com/Sottti/.github/blob/main/CONTRIBUTING.md)
-and the appropriate template from `Sottti/.github` on `main`:
+[shared contribution guide](https://github.com/Sottti/.github/blob/develop/CONTRIBUTING.md)
+and the appropriate template from `Sottti/.github` on `develop`:
 
 ```sh
-gh api 'repos/Sottti/.github/contents/CONTRIBUTING.md?ref=main' -H 'Accept: application/vnd.github.raw+json'
+gh api 'repos/Sottti/.github/contents/CONTRIBUTING.md?ref=develop' -H 'Accept: application/vnd.github.raw+json'
 # For a bug report:
-gh api 'repos/Sottti/.github/contents/.github/ISSUE_TEMPLATE/bug_report.md?ref=main' -H 'Accept: application/vnd.github.raw+json'
+gh api 'repos/Sottti/.github/contents/.github/ISSUE_TEMPLATE/bug_report.md?ref=develop' -H 'Accept: application/vnd.github.raw+json'
 # For other issues:
-gh api 'repos/Sottti/.github/contents/.github/ISSUE_TEMPLATE/task.md?ref=main' -H 'Accept: application/vnd.github.raw+json'
+gh api 'repos/Sottti/.github/contents/.github/ISSUE_TEMPLATE/task.md?ref=develop' -H 'Accept: application/vnd.github.raw+json'
 # For a pull request:
-gh api 'repos/Sottti/.github/contents/.github/pull_request_template.md?ref=main' -H 'Accept: application/vnd.github.raw+json'
+gh api 'repos/Sottti/.github/contents/.github/pull_request_template.md?ref=develop' -H 'Accept: application/vnd.github.raw+json'
 ```
 
 Apply the shared title rules and fill the selected template before submitting.
