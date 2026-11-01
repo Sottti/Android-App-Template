@@ -5,7 +5,11 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "tuesday"
+      time: "03:17"
+      timezone: "Europe/Madrid"
+    rebase-strategy: "disabled"
     labels:
       - "dependencies"
       - "dependabot"
@@ -20,7 +24,11 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "tuesday"
+      time: "03:17"
+      timezone: "Europe/Madrid"
+    rebase-strategy: "disabled"
     labels:
       - "ci"
       - "dependabot"
