@@ -68,7 +68,7 @@ class WeeklyCiTest < Minitest::Test
     assert_operator init, :<, build
     assert_operator build, :<, analysis
     assert_equal "matrix.language == 'java-kotlin'", steps[build].fetch("if")
-    assert_equal "./gradlew --no-daemon --no-build-cache --no-configuration-cache --rerun-tasks assembleDebug", steps[build].fetch("run")
+    assert_equal "./gradlew --no-daemon --no-build-cache --no-configuration-cache --rerun-tasks assemble", steps[build].fetch("run")
     steps.each { |s| refute s.key?("continue-on-error") }
   end
 
