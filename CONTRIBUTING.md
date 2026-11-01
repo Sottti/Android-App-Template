@@ -28,20 +28,25 @@ Run instrumented tests when a change affects Android runtime behavior:
 ./gradlew connectedDebugAndroidTest
 ```
 
-## Weekly and manual verification
+## PR and manual verification
 
-Android verification and advanced CodeQL (`actions` and `java-kotlin`) run once
-weekly on Tuesday at 03:17 Europe/Madrid, or by explicit manual dispatch, on
-trusted `develop`. The IANA timezone preserves local time across DST; GitHub may
-delay a scheduled run. Dependabot version updates use the same weekly slot and
-automatic rebasing is disabled.
+Android verification and advanced CodeQL (`actions` and `java-kotlin`) run on
+every pull request, including drafts and updates. They also support explicit
+manual dispatch from `develop`. There is no CI cron schedule and no push or
+post-merge run. Superseded runs are cancelled per workflow and PR number;
+different PRs do not cancel each other.
 
-PR creation, updates, pushes and merges must not start Actions or CI, including
-managed CodeQL, indirect callers, comment commands and merge queues. Required
-CI status checks must not be reintroduced in rulesets or classic protection.
-Keep PR requirements, conversation resolution, force-push/deletion safeguards,
-security alerts, independent review and local verification. Weekly results do
-not verify individual PRs: regressions may be discovered after merge.
+This is an owner-approved PR-CI exception for this public repository. Keep all
+existing validation commands, reports, coverage thresholds and failure behavior.
+Run local checks and independent review before merge, and inspect the actual PR
+checks. Do not add required status gates or change unrelated branch protections.
+Use `pull_request`, not privileged `pull_request_target` or indirect caller chains.
+Keep managed CodeQL default setup disabled so it does not duplicate the advanced
+CodeQL workflow.
+
+Dependabot version updates remain weekly on Tuesday at 03:17 Europe/Madrid,
+with automatic rebasing disabled. This separate dependency-update schedule and
+the existing security-update settings are unchanged by the CI trigger change.
 
 Before editing workflow policy, run its regression checks:
 
@@ -51,31 +56,16 @@ ruby .github/scripts/test_weekly_ci.rb
 
 For manual recovery, select **Run workflow** on **Android CI** or **CodeQL** with
 `develop`, or use `gh workflow run android.yml --ref develop` and
-`gh workflow run codeql.yml --ref develop`. Other refs deliberately skip jobs.
-Inspect each run's exact SHA, job/step outcomes and reports. A skipped job is not
-a pass, and runner/billing admission failure is not test execution. Do not add
-automatic retries. A successful manual run does not prove the scheduler fired.
+`gh workflow run codeql.yml --ref develop`. Other manual refs deliberately skip
+jobs. Inspect each run's exact SHA, job/step outcomes and reports. A skipped job
+is not a pass, and runner/billing admission failure is not test execution. Do
+not add automatic retries. Local and manual results apply to their tested
+revision and do not replace the actual PR result.
 
-Use the owner's existing GitHub Actions failure-email notifications. Verify the
-actual notification settings and recipient in GitHub Settings → Notifications;
-workflow YAML cannot configure or prove email delivery. Keep first genuine
-weekly execution proof pending until an actual `schedule` run is observed.
-
-When migrating an existing repository, inventory registered workflows, CodeQL
-default setup, effective rulesets/classic protection and all open PR branches.
-Disable obsolete registrations while transitioning, remove only the retired CI
-requirements from current protection, and retain the other rules. Disable CodeQL
-default setup before enabling advanced analysis. Reconcile old PR workflow files
-before re-enabling workflows; old PRs can otherwise still trigger their copies.
-Dependabot PRs opened before `rebase-strategy: disabled` can continue rebasing
-for 30 days. Preserve their updates and add a maintainer commit that reconciles
-the policy; Dependabot stops automatic rebasing after maintainer commits. Do not
-use Dependabot skip markers in those commit messages or manually recreate those
-PRs without rechecking the policy.
-
-The shared policy and restoration instructions in
-[Sottti/.github#13](https://github.com/Sottti/.github/issues/13) must agree before
-rollout is considered complete. Never restore the superseded PR-CI requirements.
+Use the owner's existing GitHub Actions failure-email notifications. Workflow
+YAML cannot configure or prove email delivery. Keep shared policy guidance in
+[Sottti/.github](https://github.com/Sottti/.github/blob/develop/branch-protection/README.md)
+aligned with this exception; other repositories retain their approved cadence.
 
 ## Pull Requests
 

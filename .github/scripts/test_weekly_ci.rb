@@ -2,9 +2,8 @@ require "yaml"
 require "minitest/autorun"
 
 # YAML 1.1 interprets the Actions key `on` as true.
-class WeeklyCiTest < Minitest::Test
+class CiPolicyTest < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
-  SCHEDULE = [{ "cron" => "17 3 * * 2", "timezone" => "Europe/Madrid" }].freeze
   DEPENDABOT_SCHEDULE = {
     "interval" => "weekly", "day" => "tuesday", "time" => "03:17",
     "timezone" => "Europe/Madrid"
@@ -14,17 +13,20 @@ class WeeklyCiTest < Minitest::Test
     YAML.load_file(File.join(ROOT, path))
   end
 
-  def test_all_workflows_are_weekly_or_manual_only
+  def test_all_workflows_run_on_every_pr_or_trusted_manual_dispatch
     paths = Dir[File.join(ROOT, ".github/workflows/*.{yml,yaml}")]
     assert_equal %w[android.yml codeql.yml], paths.map { |p| File.basename(p) }.sort
     paths.each do |path|
       workflow = YAML.load_file(path)
       events = workflow.fetch("on") { workflow.fetch(true) }
-      assert_equal %w[schedule workflow_dispatch], events.keys.sort, path
-      assert_equal SCHEDULE, events.fetch("schedule"), path
+      assert_equal %w[pull_request workflow_dispatch], events.keys.sort, path
+      assert_nil events.fetch("pull_request"), "Do not filter PR paths, branches or events"
+      assert_nil events.fetch("workflow_dispatch"), path
+      assert_equal "${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}", workflow.fetch("concurrency").fetch("group"), path
+      assert_equal true, workflow.fetch("concurrency").fetch("cancel-in-progress"), path
       workflow.fetch("jobs").each_value do |job|
-        # No PR payload condition that silently skips scheduled/manual jobs.
-        assert_equal "github.ref == 'refs/heads/develop'", job.fetch("if"), path
+        # PR merge refs must run, while manual runs stay on trusted develop.
+        assert_equal "github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop')", job.fetch("if"), path
         assert_equal "ubuntu-latest", job.fetch("runs-on"), path
         refute job.key?("uses"), "Automatic reusable callers are outside this policy"
       end
