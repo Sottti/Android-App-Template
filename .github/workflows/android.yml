@@ -1,12 +1,10 @@
 name: Android CI
 
 on:
-  push:
-    branches: [ "develop" ]
-  pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "17 3 * * 2"
+      timezone: "Europe/Madrid"
 
 permissions:
   contents: read
@@ -17,6 +15,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/develop'
     name: Build & Validate
     runs-on: ubuntu-latest
     timeout-minutes: 60
