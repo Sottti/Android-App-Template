@@ -5,8 +5,7 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "monthly"
       time: "03:17"
       timezone: "Europe/Madrid"
     rebase-strategy: "disabled"
@@ -24,8 +23,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "monthly"
       time: "03:17"
       timezone: "Europe/Madrid"
     rebase-strategy: "disabled"

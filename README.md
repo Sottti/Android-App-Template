@@ -112,7 +112,7 @@ Execute the following Gradle tasks from the project root to run the automated te
 | Screenshot tests | `./gradlew verifyPaparazziDebug` | Verifies debug Paparazzi screenshots against the checked-in baselines without an emulator. |
 | Instrumented Android tests | `./gradlew connectedDebugAndroidTest` | Launches Espresso/Compose instrumentation tests in `src/androidTest` on a connected emulator or device. |
 
-The local/unit and screenshot commands match the suites run by the [CI workflow](.github/workflows/android.yml) weekly on Tuesday at 03:17 Europe/Madrid or by explicit manual dispatch on `develop`. CodeQL analyzes Actions and Java/Kotlin on the same cadence; Dependabot version updates share that weekly slot. PRs, pushes and merges do not run CI. Keep local checks and independent PR review; weekly checks can discover regressions after merge. See [manual recovery and migration guidance](CONTRIBUTING.md#weekly-and-manual-verification).
+The local/unit and screenshot commands match the suites run by the [CI workflow](.github/workflows/android.yml) on every PR or explicit manual dispatch on `develop`. CodeQL analyzes Actions and Java/Kotlin on the same cadence. Dependabot version updates run separately on the first day of each month at 03:17 Europe/Madrid. Pushes and merges do not run CI. Keep local checks, independent PR review and actual PR check results. See [verification and recovery guidance](CONTRIBUTING.md#pr-and-manual-verification).
 
 > ℹ️ Ensure that an Android emulator or physical device is connected before running the
 > instrumentation suite.

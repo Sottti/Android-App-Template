@@ -44,9 +44,9 @@ Use `pull_request`, not privileged `pull_request_target` or indirect caller chai
 Keep managed CodeQL default setup disabled so it does not duplicate the advanced
 CodeQL workflow.
 
-Dependabot version updates remain weekly on Tuesday at 03:17 Europe/Madrid,
+Dependabot version updates run monthly on the first day at 03:17 Europe/Madrid,
 with automatic rebasing disabled. This separate dependency-update schedule and
-the existing security-update settings are unchanged by the CI trigger change.
+the existing security-update settings remain unchanged.
 
 Before editing workflow policy, run its regression checks:
 
