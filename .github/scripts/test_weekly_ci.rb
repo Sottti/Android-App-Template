@@ -5,7 +5,7 @@ require "minitest/autorun"
 class CiPolicyTest < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
   DEPENDABOT_SCHEDULE = {
-    "interval" => "weekly", "day" => "tuesday", "time" => "03:17",
+    "interval" => "monthly", "time" => "03:17",
     "timezone" => "Europe/Madrid"
   }.freeze
 
@@ -74,7 +74,7 @@ class CiPolicyTest < Minitest::Test
     steps.each { |s| refute s.key?("continue-on-error") }
   end
 
-  def test_dependabot_updates_are_weekly_without_automatic_rebases
+  def test_dependabot_updates_are_monthly_without_automatic_rebases
     updates = config(".github/dependabot.yml").fetch("updates")
     assert_equal %w[github-actions gradle], updates.map { |u| u.fetch("package-ecosystem") }.sort
     updates.each do |update|
