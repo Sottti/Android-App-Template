@@ -36,3 +36,7 @@ Follow this repository's [contribution and verification guidance](CONTRIBUTING.m
 Before merging a pull request, read the shared
 [merge requirements](https://github.com/Sottti/.github/blob/develop/CONTRIBUTING.md#protected-branches-and-merge-requirements),
 including the one local peer review every pull request needs before it merges.
+
+## Second opinions
+
+Second opinions from other models (GPT, Gemini or Claude) run only on the owner's Mac, through the `second-opinion` skill from Sottti/Agent-Workflows. A cloud or remote session doesn't have it: if asked for one there, say that it only runs in a local session, and don't ask other models instead.
