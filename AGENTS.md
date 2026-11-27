@@ -42,6 +42,10 @@ including the one local peer review every pull request needs before it merges.
 Second opinions from other models (GPT, Gemini or Claude) run only on the
 owner's Mac, through the
 [`second-opinion` skill](https://github.com/Sottti/Agent-Workflows/blob/develop/skills/second-opinion/SKILL.md).
-A session running elsewhere, such as a cloud session, doesn't have it. If asked
-for one there, or if one would help, say it needs a local session; don't ask
-other models instead.
+A session running elsewhere, such as a cloud session, hands the work over:
+
+- In a Claude Project thread, have the project's coordinator start a local
+  session on the owner's Mac in this repository. Push the work first; the brief
+  names the branch or commit, what to review and the questions, and asks it to
+  use the `second-opinion` skill and send back both answers in full. Relay them.
+- If no local session can be started, say so. Never ask other models instead.
